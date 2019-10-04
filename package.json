@@ -1,0 +1,40 @@
+{
+  "name": "boilerplate",
+  "version": "1.0.0",
+  "description": "Genesys product development boiler plate for application development",
+  "main": "server.js",
+  "scripts": {
+    "test": "Set DEBUG=* && nodemon ./bin/www",
+    "start": "nodemon ./bin/www",
+    "postinstall": "winser -i -s -c",
+    "preuninstall": "winser -r -x -s"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/genesys_development/Node_Api_Boilerplate.git"
+  },
+  "keywords": [
+    "Genesys_node_api"
+  ],
+  "author": "c.okoye@genesystechhub.com,developeradmin@genesystechhub.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/genesys_development/Node_Api_Boilerplate/issues"
+  },
+  "homepage": "https://gitlab.com/genesys_development/Node_Api_Boilerplate#readme",
+  "dependencies": {
+    "@hapi/joi": "^15.1.1",
+    "compression": "^1.7.3",
+    "cors": "^2.8.5",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.5.0",
+    "mongoose": "^5.4.18",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.2",
+    "nodemon": "^1.18.10",
+    "winser": "^1.0.3",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {}
+}
