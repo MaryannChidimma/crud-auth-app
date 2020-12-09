@@ -4,18 +4,19 @@
  * Module dependencies.
  */
 
-var app = require('../server');
-// var logger = require('../dist/util/logger');
-var path = require('path');
-var fs = require('fs');
-var http = require('http');
-var https  = require('https')
+require('dotenv').config();
+const loggerConfig = require('./config/logger')[process.env.NODE_ENV|| 'development'];
+const app = require('../server')(loggerConfig);
+const path = require('path');
+const fs = require('fs');
+const http = require('http');
+const https  = require('https')
 var dbConfiguration = require('./config/db');
-var port = normalizePort(process.env.PORT || '8080');
+const port = normalizePort(process.env.PORT || '8080');
 var serverType = process.env.servertype;
 app.set('port', port);
 var server = {};
-
+const logger = loggerConfig.log();
 
 
 /**
@@ -104,5 +105,8 @@ function onListening() {
     var bind = typeof addr === 'string' ?
         'pipe ' + addr :
         'port ' + addr.port;
+        
+        console.table(addr);
+    logger.info(`listening on port ${server.address().port} in ${app.get('env')} mode.`);
     // logger.default.info('Listening on ' + bind);
 }
