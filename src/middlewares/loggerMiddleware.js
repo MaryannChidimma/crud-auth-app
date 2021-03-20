@@ -7,12 +7,12 @@ const pjs = require('../../package.json');
 const {name, version} = pjs;
 
 
-class loggerMiddleWare {
+class loggerMiddleWare{
     constructor(app, logger) {
         this.app = app;
         this.logger = logger;
     }
-    addMiddleWare() {
+ addMiddleWare() {
         if (this.app.get('env') === 'development') {
             this.app.use((req, res, next) => {
                 var timestamp = new Date(); // getting current timestamp
