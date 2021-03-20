@@ -13,15 +13,15 @@ class  userController{
       res.status(result.statusCode).json(result.data);
   }
 
-  async update(req, res){
+  async updateUser(req, res){
   
-      const result = await UserService.update(req.params.userId, req.body)
+      const result = await UserService.updateUser(req.params.userId, req.body)
       res.status(result.statusCode).json(result.data);
     }
 
-  async delete(req, res){
+  async deleteUser(req, res){
     
-      const result = await UserService.delete(req.params.userId) 
+      const result = await UserService.deleteUser(req.params.userId, req.body) 
       res.status(result.statusCode).json(result.data);
     }
    

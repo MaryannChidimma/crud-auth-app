@@ -6,8 +6,8 @@ const authMiddleware = require('../middlewares/authMiddleware')
 module.exports = function () {
 router.post('/users/register', userCtrl.register);
 router.post('/users/login', userCtrl.login)
-router.patch('/users/:userId', authMiddleware, userCtrl.update);
-router.delete('/users/:userId', authMiddleware, userCtrl.delete);
+router.patch('/users/update/:userId', authMiddleware, userCtrl.updateUser);
+router.delete('/users/:delete/:userId', authMiddleware, userCtrl.deleteUser);
 return router;
 
 }

@@ -1,6 +1,9 @@
-
+const mongoose = require('mongoose')
 const User = require('../models/userModel');
 const bcrypt = require('bcrypt')
+const catchErrorHandler = require("../utils/catchErrorHandler");
+const { find } = require('../models/userModel');
+
 class UserService {
     async register(data) {
         const { fullname, email, password, phone_number } = data
@@ -15,6 +18,7 @@ class UserService {
         }
         else{
              const user =  await new User({
+              _id: mongoose.Types.ObjectId(),
                  fullname,
                  email,
                  password,
@@ -47,50 +51,47 @@ class UserService {
          else{
         return {"data": {"success": false, "message": "invalid Email or Password"}, "statusCode": 401}
          } 
+        }
+      
+     async updateUser(id, data){
+      let {email, fullname, phone_number} = data
+      try{
+      if(id){
+        let updateUser= await User.findOneAndUpdate({_id:id}, { $set: data},{ new: true,
+          upsert: true })
+          if(updateUser){
+            return {"data": {"success": true, "message": 'Account was successfully updated', updateUser}, "statusCode": 200}
+          }
+            return {"data": {"success": false, "message": 'We encountered an error updating your account, try again.'}, "statusCode": 500}
       }
-
-  async update(userId, data) {
-    try{
-    const {fullname, email, phone_number} = data;
-   const user = await User.findOneAndUpdate(
-    userId,
-    data,
-    { new: true }
-   );
-        
-    
-        if (!user){
-          return {"data": {"success": false, "message": 'User does not exist'},  "statusCode": 404}
-        } 
-        return user;
+         else{
+           return {data: {message:"id is required"}, statusCode:417};
+         }
       }
       catch(err){
-          return {"data": {"success": false, "message": err.message}, statusCode: 500}
-      }
-    }
-      async updatePassword(userId, data){
-        
-          const user = await User.findOne({ _id: userId });
-          if (!user){
-         return {"data": {"success": false, "message": 'User dose not exist'},  "statusCode": 404}
-          }
-          //Check if user password is valid
-          const user_password = await bcrypt.compare(data.password, user.password)
-          if (!user_password){
-            return {"data": {"success": false, "message": 'Invalid Password'},  "statusCode": 401}
-          }
-          await User.updateOne(
-            { _id: userId },
-            { $set: {password : data.password} },
-            { new: true })
-      
-          return 
+        return catchErrorHandler.errorHandler(err, "User's data could not be updated, try again.")
       }
     
-      async delete(id) {
-        const user = await User.remove({ _id: id });
-        return user
+ }
+
+  async deleteUser(id){
+    try{
+    if(id){
+      const user = await User.remove({ _id: id });
+      return {"data": {"success": true, "message": 'Account successfully deleted.'}, "statusCode": 301}
     }
+    else{
+      return {"data": {"success": false, "message": 'We encountered an error deleting your account, try again.'}, "statusCode": 500}
 
     }
+  }
+catch(err){
+  return catchErrorHandler.errorHandler(err, "Could not delete User, try again.")
+}
+
+ }
+ }
+    
+    
+    
       module.exports = module.exports = new UserService();

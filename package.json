@@ -6,6 +6,7 @@
   "scripts": {
     "debug": "set DEBUG=* && nodemon ./bin/www | bunyan",
     "start": "nodemon ./bin/www | bunyan",
+    "dev": "node ./bin/www | bunyan",
     "test": "mocha"
   },
   "repository": {
