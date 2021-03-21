@@ -19,14 +19,13 @@ class UserService {
     }
     else {
       const user = await new User({
-        _id: mongoose.Types.ObjectId(),
         fullname,
         email,
         password,
         phone_number,
         usertype: "user"
       }).save();
-
+      user_data = {"user_id": user._id, email: user.email, "fullname": user.fullname, "phone_number": user.phone_number, "usertype": user.usertype}
       return { "data": { "success": true, "message": `You have successfully signed up`, user }, "statusCode": 201 }
     }
   }
@@ -38,13 +37,13 @@ class UserService {
         return { "data": { "success": false, "message": 'Request failed due to all required inputs were not included', "required inputs": " email, password" }, "statusCode": 417 }
       }
       //check if user exist
-      const user = await User.findOne({ email });
+      const user = await User.findOne({email: email});
       if (!user) {
         return { "data": { "success": false, "message": "Email does not exist" }, "statusCode": 404 }
       }
-
-      user_data = { "user_id": user._id, email: user.email, "fullname": user.fullname, "phone_number": user.phone_number, "usertype": user.usertype }
-      //compare password provided with password already in database
+       user_data = { "user_id": user._id, email: user.email, "fullname": user.fullname, "phone_number": user.phone_number, "usertype": user.usertype }
+      
+       //compare password provided with password already in database
       const isMatch = await bcrypt.compare(password, user.password)
       if (isMatch) {
         return authTokenGenerator.generateToken(user_data, 'login')
