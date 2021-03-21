@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Genesys product development boiler plate for application development",
   "main": "server.js",
+  "engines": {
+    "node": "14.8.0"
+  },
   "scripts": {
     "debug": "set DEBUG=* && nodemon ./bin/www | bunyan",
     "start": "node ./bin/www | bunyan",
