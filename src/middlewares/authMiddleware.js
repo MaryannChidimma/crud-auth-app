@@ -4,7 +4,7 @@ exports.authenticateUser = async (req, res, next) => {
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
     if (token) {
         tokenDecoder.decodeToken(token).then(decoded => {
-            User.findOne({ _id: decoded.user_data.user_id }).then(data => {
+            User.findOne({ _id: decoded.user.user_id }).then(data => {
                 if (data == null) {
                     res.status(404).send({ success: false, message: "User does not exist" });
                 } else {
