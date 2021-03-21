@@ -39,18 +39,5 @@ const UserSchema = mongoose.Schema({
         });
     })
 
-    // UserSchema.methods.generateAuthToken = function (){
-    //     user = this;
-    //     return jwt.sign({  email: user.email,
-    //         fullname: user.fullname,
-    //         Id: user._id,
-    //         phonenumber: user.phone_number,
-    //         usertype:user.usertype },
-    //         process.env.JWT_KEY,
-    //         { expiresIn: '24h' }
-    //     );
-    // }
-    
-
     const User =  mongoose.model('user', UserSchema)
     module.exports = User;
