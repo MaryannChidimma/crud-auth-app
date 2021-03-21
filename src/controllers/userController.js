@@ -9,7 +9,7 @@ class  userController{
     }
 
   async login(req, res) {
-    const result = await UserService.login(req.body);
+    const result = await UserService.login(req.auth.Id);
       res.status(result.statusCode).json(result.data);
   }
 
