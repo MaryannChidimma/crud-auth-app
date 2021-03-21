@@ -9,13 +9,13 @@ class  userController{
     }
 
   async login(req, res) {
-    const result = await UserService.login(req.auth.Id);
+    const result = await UserService.login(req.body);
       res.status(result.statusCode).json(result.data);
   }
 
   async updateUser(req, res){
   
-      const result = await UserService.updateUser(req.params.userId, req.body)
+      const result = await UserService.updateUser(req.auth.Id, req.body)
       res.status(result.statusCode).json(result.data);
     }
 
