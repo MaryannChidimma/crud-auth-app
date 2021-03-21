@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "debug": "set DEBUG=* && nodemon ./bin/www | bunyan",
-    "start": "nodemon ./bin/www | bunyan",
-    "dev": "node ./bin/www | bunyan",
+    "start": "node ./bin/www | bunyan",
+    "dev": "nodemon ./bin/www | bunyan",
     "test": "mocha"
   },
   "repository": {
