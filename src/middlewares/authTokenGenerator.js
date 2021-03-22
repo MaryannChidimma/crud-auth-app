@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const secret = process.env.JWT_KEY;
 
 exports.generateToken = async (user_data, situation) => {
-  const authToken = await jwt.sign({ user_data }, secret, { expiresIn: "24hrs" })
+  const authToken = await jwt.sign({ user_data }, secret, { expiresIn: "12hrs" })
   
   if(authToken){
     return {"data": {"success": true, "message": "Authorization successful.", "token": authToken, user_data, "situation": situation}, "statusCode": 200}

@@ -1,31 +1,30 @@
 
 const UserService = require("../services/userService.js");
 
-
-class  userController{
+class userController {
   async register(req, res) {
-      const result = await UserService.register(req.body);
-      res.status(result.statusCode).json(result.data);
-    }
+    const result = await UserService.register(req.body);
+    res.status(result.statusCode).json(result.data);
+  }
 
   async login(req, res) {
     const result = await UserService.login(req.body);
-      res.status(result.statusCode).json(result.data);
+    res.status(result.statusCode).json(result.data);
   }
 
-  async updateUser(req, res){
-  
-      const result = await UserService.updateUser(req.auth.Id, req.body)
-      res.status(result.statusCode).json(result.data);
-    }
+  async updateUser(req, res) {
 
-  async deleteUser(req, res){
-    
-      const result = await UserService.deleteUser(req.auth.Id) 
-      res.status(result.statusCode).json(result.data);
-    }
-   
-  
+    const result = await UserService.updateUser(req.auth.Id, req.body)
+    res.status(result.statusCode).json(result.data);
+  }
+
+  async deleteUser(req, res) {
+
+    const result = await UserService.deleteUser(req.auth.Id)
+    res.status(result.statusCode).json(result.data);
+  }
+
+
 }
 
 

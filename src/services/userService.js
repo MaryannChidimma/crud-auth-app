@@ -27,7 +27,7 @@ class UserService {
       if (!user) {
         return { "data": { "success": false, "message": "We encountered an issue registering your account, try again." }, "statusCode": 500 }
       }
-      
+
       const user_data = { "user_id": user._id, email: user.email, "fullname": user.fullname, "phone_number": user.phone_number, "usertype": user.usertype }
       return { "data": { "success": true, "message": `You have successfully signed up`, user_data }, "statusCode": 201 }
     }
@@ -72,7 +72,8 @@ class UserService {
           upsert: true
         })
         if (updateUser) {
-          return { "data": { "success": true, "message": 'Account was successfully updated', updateUser }, "statusCode": 200 }
+          const user_data = { "user_id": updateUser._id, email: updateUser.email, "fullname": updateUser.fullname, "phone_number": updateUser.phone_number, "usertype": updateUser.usertype }
+          return { "data": { "success": true, "message": 'Account was successfully updated', user_data }, "statusCode": 200 }
         }
         return { "data": { "success": false, "message": 'We encountered an error updating your account, try again.' }, "statusCode": 500 }
       }
@@ -103,7 +104,5 @@ class UserService {
 
   }
 }
-
-
 
 module.exports = module.exports = new UserService();
