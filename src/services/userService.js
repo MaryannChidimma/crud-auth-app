@@ -63,11 +63,13 @@ class UserService {
   }
 
 
-  async updateUser(id, data) {
+  async updateUser(user_id, data){
     let { email, fullname, phone_number } = data
+    if(!email || !fullname || !phone_number){
+      return { "data": { "success": false, "message": "required details for updating were not specified"}, "statusCode": 417 }  
+    }
     try {
-      if (id) {
-        let updateUser = await User.findOneAndUpdate({ _id: id }, { $set: data }, {
+        let updateUser = await User.findOneAndUpdate({ _id: user_id }, { $set: data }, {
           new: true,
           upsert: true
         })
@@ -76,10 +78,7 @@ class UserService {
           return { "data": { "success": true, "message": 'Account was successfully updated', user_data }, "statusCode": 200 }
         }
         return { "data": { "success": false, "message": 'We encountered an error updating your account, try again.' }, "statusCode": 500 }
-      }
-      else {
-        return { data: { message: "id is required" }, statusCode: 417 };
-      }
+
     }
     catch (err) {
       return catchErrorHandler.errorHandler(err, "User's data could not be updated, try again.")
@@ -87,21 +86,14 @@ class UserService {
 
   }
 
-  async deleteUser(id) {
+  async deleteUser(user_id) {
     try {
-      if (id) {
-        const user = await User.remove({ _id: id });
+        const user = await User.remove({ _id: user_id});
         return { "data": { "success": true, "message": 'Account successfully deleted.' }, "statusCode": 301 }
-      }
-      else {
-        return { "data": { "success": false, "message": 'We encountered an error deleting your account, try again.' }, "statusCode": 500 }
-
-      }
-    }
-    catch (err) {
+      
+     }catch (err) {
       return catchErrorHandler.errorHandler(err, "Could not delete User, try again.")
     }
-
   }
 }
 
