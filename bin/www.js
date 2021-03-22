@@ -107,6 +107,6 @@ function onListening() {
         'port ' + addr.port;
         
         console.table(addr);
-    logger.info(`listening on port ${server.address().port} in ${app.get('env')} mode.`);
+    // logger.info(`listening on port ${server.address().port} in ${app.get('env')} mode.`);
     // logger.default.info('Listening on ' + bind);
 }
